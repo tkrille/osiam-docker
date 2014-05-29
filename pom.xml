@@ -1,0 +1,140 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.osiam</groupId>
+    <artifactId>osiam-docker</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <properties>
+        <org.osiam.version>1.0</org.osiam.version>
+        <osiam-server-dist.basedir>osiam-server-${org.osiam.version}-dist</osiam-server-dist.basedir>
+        <osiam-selfadministration-dist.basedir>addon-self-administration-${org.osiam.version}</osiam-selfadministration-dist.basedir>
+    </properties>
+
+    <name>OSIAM Docker Image</name>
+    <description>
+        This project builds a docker image with OSIAM installed
+        and configured ready to use for development purposes.
+    </description>
+    <licenses>
+        <license>
+            <name>The MIT License (MIT)</name>
+            <url>http://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.github.goldin</groupId>
+                <artifactId>copy-maven-plugin</artifactId>
+                <version>0.2.5</version>
+                <executions>
+                    <execution>
+                        <id>prepare-osiam-files</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <!-- download OSIAM distribution -->
+                                <resource>
+                                    <targetPath>${project.build.directory}/osiam-tmp</targetPath>
+                                    <dependencies>
+                                        <dependency>
+                                            <groupId>org.osiam</groupId>
+                                            <artifactId>osiam-server-distribution</artifactId>
+                                            <version>${org.osiam.version}</version>
+                                            <type>zip</type>
+                                            <classifier>distribution</classifier>
+                                        </dependency>
+                                        <dependency>
+                                            <groupId>org.osiam</groupId>
+                                            <artifactId>addon-self-administration</artifactId>
+                                            <version>${org.osiam.version}</version>
+                                            <type>zip</type>
+                                            <classifier>distribution</classifier>
+                                        </dependency>
+                                    </dependencies>
+                                    <unpack>true</unpack>
+                                </resource>
+                                <!-- copy relevant files to the right directories -->
+                                <!-- war files -->
+                                <resource>
+                                    <targetPath>${project.build.directory}/osiam/war</targetPath>
+                                    <directory>${project.build.directory}/osiam-tmp</directory>
+                                    <include>**/*.war</include>
+                                </resource>
+                                <!-- sql scripts -->
+                                <resource>
+                                    <targetPath>${project.build.directory}/osiam/sql/auth-server</targetPath>
+                                    <directory>${project.build.directory}/osiam-tmp/${osiam-server-dist.basedir}/osiam-auth-server/sql</directory>
+                                    <include>*.sql</include>
+                                </resource>
+                                <resource>
+                                    <targetPath>${project.build.directory}/osiam/sql/resource-server</targetPath>
+                                    <directory>${project.build.directory}/osiam-tmp/${osiam-server-dist.basedir}/osiam-resource-server/sql</directory>
+                                    <include>*.sql</include>
+                                </resource>
+                                <resource>
+                                    <targetPath>${project.build.directory}/osiam/sql/addon-self-administration</targetPath>
+                                    <directory>${project.build.directory}/osiam-tmp/${osiam-selfadministration-dist.basedir}/sql</directory>
+                                    <include>*.sql</include>
+                                </resource>
+                                <!-- deployed configuration -->
+                                <resource>
+                                    <targetPath>${project.build.directory}/osiam/config</targetPath>
+                                    <directory>${project.build.directory}/osiam-tmp/${osiam-server-dist.basedir}/osiam-auth-server/configuration</directory>
+                                    <preservePath>true</preservePath>
+                                </resource>
+                                <resource>
+                                    <targetPath>${project.build.directory}/osiam/config</targetPath>
+                                    <directory>${project.build.directory}/osiam-tmp/${osiam-server-dist.basedir}/osiam-resource-server/configuration</directory>
+                                    <preservePath>true</preservePath>
+                                </resource>
+                                <resource>
+                                    <targetPath>${project.build.directory}/osiam/config</targetPath>
+                                    <directory>${project.build.directory}/osiam-tmp/${osiam-selfadministration-dist.basedir}/configuration</directory>
+                                    <preservePath>true</preservePath>
+                                </resource>
+                                <!-- cleanup: remove tmp dir -->
+                                <resource>
+                                    <directory>${project.build.directory}/osiam-tmp</directory>
+                                    <include>**/*</include>
+                                    <clean>true</clean>
+                                    <cleanEmptyDirectories>true</cleanEmptyDirectories>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.alexecollins.docker</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.0.0</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>osiam releases repo</id>
+            <url>https://maven-repo.evolvis.org/releases</url>
+        </repository>
+        <repository>
+            <id>osiam snapshots repo</id>
+            <url>https://maven-repo.evolvis.org/snapshots</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+</project>
