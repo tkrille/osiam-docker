@@ -2,7 +2,7 @@ OSIAM Docker Image
 ==================
 
 This project builds a docker image with OSIAM installed and configured ready to 
-use for development purposes.
+use for development purposes. **NOTE:** This image is for development purposes only! Do not even think about using it in a production-like environment!
 
 Build image with:
 
