@@ -8,7 +8,7 @@
     <packaging>pom</packaging>
     <properties>
         <org.osiam.version>1.0</org.osiam.version>
-        <osiam-server-dist.basedir>osiam-server-${org.osiam.version}-dist</osiam-server-dist.basedir>
+        <osiam-server-dist.basedir>osiam-server-distribution-${org.osiam.version}</osiam-server-dist.basedir>
         <osiam-selfadministration-dist.basedir>addon-self-administration-${org.osiam.version}</osiam-selfadministration-dist.basedir>
     </properties>
 
@@ -49,7 +49,6 @@
                                             <artifactId>osiam-server-distribution</artifactId>
                                             <version>${org.osiam.version}</version>
                                             <type>zip</type>
-                                            <classifier>distribution</classifier>
                                         </dependency>
                                         <dependency>
                                             <groupId>org.osiam</groupId>
