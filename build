@@ -1,0 +1,5 @@
+#!/bin/bash
+
+. build.conf
+
+docker build --rm --tag osiamorg/osiam:$OSIAM_VERSION .
