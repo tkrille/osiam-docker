@@ -1,5 +1,0 @@
-packaging:
-  add:
-    - src/main/scripts/install.sh
-    - target/osiam
-    - src/main/config/supervisord.conf
