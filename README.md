@@ -12,8 +12,7 @@ Build image with:
 Installation details
 --------------------
 
-* includes resource-server, auth-server, self-administration (administration ui
-  coming soon!)
+* includes resource-server, auth-server, addon-self-administration, addon-administration
 * full postgres database already installed
 * default sample data included
 
@@ -22,11 +21,11 @@ Use the image
 
 Run with:
     
-    $ docker run -i -t -p 8080:8080 -p 5432:5432 osiamorg/osiam:1.0
+    $ docker run -i -t -p 8080:8080 -p 5432:5432 osiamorg/osiam:1.1
 
 or in daemon mode with:
 
-    $ docker run -d -p 8080:8080 -p 5432:5432 osiamorg/osiam:1.0
+    $ docker run -d -p 8080:8080 -p 5432:5432 osiamorg/osiam:1.1
 
 This will bind ports 8080 (tomcat) and 5432 (postgres) on the docker host.
 Access database with
