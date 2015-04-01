@@ -17,11 +17,11 @@ Use the image
 
 Run with:
 
-    $ docker run -i -t -p 8080:8080 -p 5432:5432 osiamorg/osiam:1.2
+    $ docker run -i -t -p 8080:8080 -p 5432:5432 osiamorg/osiam:1.3.2
 
 or in daemon mode with:
 
-    $ docker run -d -p 8080:8080 -p 5432:5432 osiamorg/osiam:1.2
+    $ docker run -d -p 8080:8080 -p 5432:5432 osiamorg/osiam:1.3.2
 
 This will bind ports 8080 (tomcat) and 5432 (postgres) on the docker host.
 Access database with
