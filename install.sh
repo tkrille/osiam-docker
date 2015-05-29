@@ -21,8 +21,8 @@ OSIAM_DIST_DIR="$INSTALLER_DIR/osiam-distribution-$OSIAM_VERSION"
 
 # download osiam and prepare for installation
 # mvn initialize
-curl -o $INSTALLER_DIR/osiam-dist.tgz \
-    https://maven-repo.evolvis.org/releases/org/osiam/osiam-distribution/$OSIAM_VERSION/osiam-distribution-$OSIAM_VERSION.tar.gz
+curl -L -o $INSTALLER_DIR/osiam-dist.tgz \
+    https://github.com/osiam/distribution/releases/download/v${OSIAM_VERSION}/osiam-distribution-${OSIAM_VERSION}.tar.gz
 tar -C $INSTALLER_DIR/ -xzf $INSTALLER_DIR/osiam-dist.tgz
 
 # add configs
