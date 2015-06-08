@@ -35,7 +35,7 @@ access OSIAM with
 
     admin:koala
 
-See [Next Steps](https://github.com/osiam/osiam/blob/v2.2/docs/detailed-reference-installation.md)
+See [Next Steps](https://github.com/osiam/osiam/blob/v2.2/docs/detailed-reference-installation.md#next-steps)
 chapter in official docs how to use OSIAM.
 
 Build
