@@ -3,9 +3,10 @@
 INSTALLER_DIR=/install
 
 # install flyway
-curl -o $INSTALLER_DIR/flyway.tgz http://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/3.2.1/flyway-commandline-3.2.1.tar.gz
+FLYWAY_VERSION=3.2.1
+curl -o $INSTALLER_DIR/flyway.tgz http://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}.tar.gz
 tar -C $INSTALLER_DIR/ -xzf $INSTALLER_DIR/flyway.tgz
-mv $INSTALLER_DIR/flyway-3.2.1 /opt/flyway
+mv $INSTALLER_DIR/flyway-${FLYWAY_VERSION} /opt/flyway
 mv -f $INSTALLER_DIR/flyway.conf /opt/flyway/conf/flyway.conf
 chmod +x /opt/flyway/flyway
 ln -s /opt/flyway/flyway /usr/local/bin/flyway
@@ -22,7 +23,7 @@ OSIAM_DIST_DIR="$INSTALLER_DIR/osiam-distribution-$OSIAM_VERSION"
 # download osiam and prepare for installation
 # mvn initialize
 curl -L -o $INSTALLER_DIR/osiam-dist.tgz \
-    https://github.com/osiam/distribution/releases/download/v${OSIAM_VERSION}/osiam-distribution-${OSIAM_VERSION}.tar.gz
+    https://github.com/osiam/osiam/releases/download/v${OSIAM_VERSION}/osiam-distribution-${OSIAM_VERSION}.tar.gz
 tar -C $INSTALLER_DIR/ -xzf $INSTALLER_DIR/osiam-dist.tgz
 
 # add configs
@@ -32,9 +33,7 @@ mv $OSIAM_DIST_DIR/osiam-server/osiam-auth-server/configuration/* /etc/osiam
 mv $OSIAM_DIST_DIR/addon-self-administration/configuration/* /etc/osiam
 mv $OSIAM_DIST_DIR/addon-administration/configuration/* /etc/osiam
 
-sed -i 's/org.osiam.mail.server.smtp.port=25/org.osiam.mail.server.smtp.port=10025/g' /etc/osiam/addon-self-administration.properties
-sed -i 's/your.smtp.server.com/localhost/g' /etc/osiam/addon-self-administration.properties
-sed -i 's/org.osiam.mail.server.username=username/org.osiam.mail.server.username=user1/g' /etc/osiam/addon-self-administration.properties
+cat $INSTALLER_DIR/addon-self-administration.properties >> /etc/osiam/addon-self-administration.properties
 
 sed -i 's/org.osiam.mail.server.smtp.port=25/org.osiam.mail.server.smtp.port=10025/g' /etc/osiam/addon-administration.properties
 sed -i 's/your.smtp.server.com/localhost/g' /etc/osiam/addon-administration.properties
@@ -67,9 +66,11 @@ mkdir -p migrations/resource-server
 unzip -joqq $OSIAM_DIST_DIR/osiam-server/osiam-resource-server/osiam-resource-server.war 'WEB-INF/classes/db/migration/postgresql/*' -d migrations/resource-server
 flyway -table=resource_server_schema_version -locations=filesystem:migrations/resource-server migrate
 
-# import setup data
-sudo -u ong psql -f $OSIAM_DIST_DIR/addon-self-administration/sql/init_data.sql
-sudo -u ong psql -f $INSTALLER_DIR/setup_data.sql
+# import addon setup data
+sudo -u ong psql -f $OSIAM_DIST_DIR/addon-self-administration/sql/client.sql
+sudo -u ong psql -f $OSIAM_DIST_DIR/addon-self-administration/sql/extension.sql
+sudo -u ong psql -f $OSIAM_DIST_DIR/addon-administration/sql/client.sql
+sudo -u ong psql -f $OSIAM_DIST_DIR/addon-administration/sql/admin_group.sql
 
 # setup tomcat
 find $OSIAM_DIST_DIR -name '*.war' -exec mv {} /var/lib/tomcat7/webapps/ \;
