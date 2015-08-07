@@ -1,20 +1,17 @@
-OSIAM Docker Image [![Build Status](https://travis-ci.org/osiam/docker-image.png?branch=master)](https://travis-ci.org/osiam/docker-image)
-==================
+# OSIAM Docker Image [![Build Status](https://travis-ci.org/osiam/docker-image.png?branch=master)](https://travis-ci.org/osiam/docker-image)
 
 This project builds a docker image with OSIAM installed and configured ready to 
 use for development purposes. **WARNING:** This image is for development purposes 
 only! Do not even think about using it in a production-like environment!
 
-Installation details
---------------------
+## Installation details
 
 * includes resource-server, auth-server, addon-self-administration, addon-administration
 * full postgres database already installed
 * default sample data included
 * running greenmail fake mail server to provide fully functional addons
 
-Use the image
--------------
+## Use the image
 
 Run with:
 
@@ -38,15 +35,22 @@ access OSIAM with
 See [Next Steps](https://github.com/osiam/osiam/blob/v2.3/docs/detailed-reference-installation.md#next-steps)
 chapter in official docs how to use OSIAM.
 
-Build
------
+### Debug
+
+To enable tomcat debugging, set the `DEBUG` environment variable to any value.
+
+For example, add this to the `run` command:
+
+    -e "DEBUG=true"
+
+## Build
+
 
 Build image with:
 
     $ ./build
     
-Mail server
------------
+## Mail server
 
 You do not need to change anything if you like to send e-mails via the
 self-administration or administration. You can get the e-mails on the exposed
@@ -71,8 +75,8 @@ Show message with ID 1
 
     RETR 1
 
-Stuff that does not work (TODOs)
---------------------------------
+## Stuff that does not work (TODOs)
+
 
 * setting db password and other security stuff on run
 * convenient retrieval of server logs
