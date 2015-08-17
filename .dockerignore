@@ -1,0 +1,7 @@
+*.md
+.travis.yml
+.gitignore
+build
+*.iml
+.git
+.idea
