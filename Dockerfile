@@ -5,17 +5,16 @@ FROM debian:wheezy
 MAINTAINER tarent solutions GmbH <info@tarent.de>
 
 # update/install packages
-RUN DEBIAN_FRONTEND=noninteractive apt-get update -y && apt-get dist-upgrade -y && \
-    DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
-        openjdk-7-jre-headless tomcat7 postgresql-9.1 sudo curl supervisor unzip nvi less
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y --force-yes && \
+    DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y --force-yes \
+        openjdk-7-jdk tomcat7 postgresql-9.1 sudo curl supervisor unzip vim-tiny less git
 
 # install OSIAM
-COPY addon-self-administration.properties build.conf flyway.conf install.sh supervisord.conf /install/
+COPY . /install/
 RUN /install/install.sh
 
-COPY start-tomcat.sh /usr/local/bin/
-
-# expose postgres and tomcat ports
+# expose postgres, tomcat and pop3 ports
 EXPOSE 5432 8080 10110
 
 # start postgres and tomcat via supervisord

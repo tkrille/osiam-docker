@@ -6,10 +6,13 @@ only! Do not even think about using it in a production-like environment!
 
 ## Installation details
 
-* includes resource-server, auth-server, addon-self-administration, addon-administration
+* includes resource-server, auth-server, addon-self-administration,
+  addon-administration
 * full postgres database already installed
 * default sample data included
 * running greenmail fake mail server to provide fully functional addons
+* a few dev tools are included for convenience: maven, flyway, git, less, vim,
+  openjdk7-jdk, curl, unzip
 
 ## Use the image
 
@@ -45,11 +48,18 @@ For example, add this to the `run` command:
 
 ## Build
 
-
-Build image with:
+The build process will checkout the OSIAM sources from GitHub and then build the
+WARs and configure Tomcat appropriately. The file `build.conf` contains the
+configuration of the repos and refs used to checkout the OSIAM sources. You can
+build the image with:
 
     $ ./build
-    
+
+You can add arbitrary options, that are known to `docker build`, to this command
+like: 
+
+    $ ./build --no-cache
+
 ## Mail server
 
 You do not need to change anything if you like to send e-mails via the
@@ -77,11 +87,8 @@ Show message with ID 1
 
 ## Stuff that does not work (TODOs)
 
-
 * setting db password and other security stuff on run
 * convenient retrieval of server logs
 * persisting data in external bind-mounted volume
 * externalizing configuration in external bind-mounted volume
-* automatically pushing the image to the docker index 
-* using the puppet module for easy installation
 * making image suitable for production deployment

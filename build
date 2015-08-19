@@ -2,4 +2,4 @@
 
 . build.conf
 
-docker build --rm --tag osiamorg/osiam:$OSIAM_VERSION .
+docker build --rm --tag osiamorg/osiam:$DOCKER_IMAGE_TAG "$@" .
