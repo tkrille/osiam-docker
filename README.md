@@ -1,4 +1,4 @@
-# OSIAM Docker Image [![Build Status](https://travis-ci.org/osiam/docker-image.png?branch=master)](https://travis-ci.org/osiam/docker-image)
+# OSIAM Docker Image
 
 This project builds a docker image with OSIAM installed and configured ready to 
 use for development purposes. **WARNING:** This image is for development purposes 
