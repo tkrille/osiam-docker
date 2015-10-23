@@ -19,18 +19,10 @@ echo "CREATE USER ong WITH PASSWORD 'b4s3dg0d';" | sudo -u postgres psql
 echo "CREATE DATABASE ong;" | sudo -u postgres psql
 echo "GRANT ALL PRIVILEGES ON DATABASE ong TO ong;" | sudo -u postgres psql
 
-mkdir -p migrations/auth-server
-cp auth-server/target/osiam-auth-server-classes.jar migrations/auth-server
-flyway -table=auth_server_schema_version \
-    -locations=db/migration/postgresql/ \
-    -jarDirs=./migrations/auth-server \
-    migrate
-
-mkdir -p migrations/resource-server
-cp resource-server/target/osiam-resource-server-classes.jar migrations/resource-server
-flyway -table=resource_server_schema_version \
-    -locations=db/migration/postgresql/ \
-    -jarDirs=./migrations/resource-server \
+mkdir -p migrations/osiam
+cp osiam/target/osiam-classes.jar migrations/osiam
+flyway -locations=db/migration/postgresql/ \
+    -jarDirs=./migrations/osiam \
     migrate
 
 # import addon setup data
