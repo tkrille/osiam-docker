@@ -3,12 +3,12 @@
 set -e
 
 mkdir /etc/osiam
-mv auth-server/src/main/deploy/* /etc/osiam
-mv resource-server/src/main/deploy/* /etc/osiam
+mv osiam/src/main/deploy/* /etc/osiam
 mv addon-self-administration/src/main/deploy/* /etc/osiam
 mv addon-administration/src/main/deploy/* /etc/osiam
 
 cat addon-self-administration.properties >> /etc/osiam/addon-self-administration.properties
+cp osiam.properties /etc/osiam/
 
 sed -i 's/org.osiam.mail.server.smtp.port=25/org.osiam.mail.server.smtp.port=10025/g' /etc/osiam/addon-administration.properties
 sed -i 's/your.smtp.server.com/localhost/g' /etc/osiam/addon-administration.properties

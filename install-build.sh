@@ -4,15 +4,9 @@ set -e
 
 . build.conf
 
-git clone ${OSIAM_AUTH_SERVER_REPO} auth-server
-pushd auth-server
-git checkout ${OSIAM_AUTH_SERVER_REF}
-mvn package -DskipTests
-popd
-
-git clone ${OSIAM_RESOURCE_SERVER_REPO} resource-server
-pushd resource-server
-git checkout ${OSIAM_RESOURCE_SERVER_REF}
+git clone ${OSIAM_REPO} osiam
+pushd osiam
+git checkout ${OSIAM_REF}
 mvn package -DskipTests
 popd
 

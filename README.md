@@ -6,7 +6,7 @@ only! Do not even think about using it in a production-like environment!
 
 ## Installation details
 
-* includes resource-server, auth-server, addon-self-administration,
+* includes OSIAM, addon-self-administration,
   addon-administration
 * full postgres database already installed
 * default sample data included
