@@ -40,11 +40,13 @@ chapter in official docs how to use OSIAM.
 
 ### Debug
 
-To enable tomcat debugging, set the `DEBUG` environment variable to any value.
-
+You can also start Tomcat in debugging mode.
+Set the `DEBUG` environment variable to any value and expose the default debugging port `8000`.
 For example, add this to the `run` command:
 
-    -e "DEBUG=true"
+    -e "DEBUG=true" -p 8000:8000
+
+You can now attach a debugger to `localhost:8000` and debug the OSIAM services.
 
 ## Build
 
