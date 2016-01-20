@@ -13,8 +13,8 @@ ln -s /opt/flyway/flyway /usr/local/bin/flyway
 
 # install greenmail webapp to provide simple smtp service for the self-administration and administration
 curl -o greenmail.war http://central.maven.org/maven2/com/icegreen/greenmail-webapp/1.4.1/greenmail-webapp-1.4.1.war
-unzip greenmail.war -d /var/lib/tomcat7/webapps/greenmail
-sed -i 's/127.0.0.1/0.0.0.0/g' /var/lib/tomcat7/webapps/greenmail/WEB-INF/web.xml
+unzip greenmail.war -d /var/lib/tomcat8/webapps/greenmail
+sed -i 's/127.0.0.1/0.0.0.0/g' /var/lib/tomcat8/webapps/greenmail/WEB-INF/web.xml
 
 # install maven
 MAVEN_VERSION=3.3.3
