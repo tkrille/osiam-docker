@@ -29,7 +29,7 @@ the docker host.
 
 Access database with
 
-    ong:b4s3dg0d
+    osiam:osiam
 
 access OSIAM with
 
