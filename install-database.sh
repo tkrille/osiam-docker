@@ -3,7 +3,7 @@
 set -e
 
 # setup database
-useradd -M -s /bin/false -U ong
+useradd -M -s /bin/false -U osiam
 echo "local all all           md5" >> /etc/postgresql/9.4/main/pg_hba.conf
 echo "host  all all 0.0.0.0/0 md5" >> /etc/postgresql/9.4/main/pg_hba.conf
 echo "listen_addresses='*'" >> /etc/postgresql/9.4/main/postgresql.conf
@@ -15,9 +15,9 @@ chown postgres:postgres /var/lib/postgresql/9.4/main/server.crt /var/lib/postgre
 
 /etc/init.d/postgresql start
 
-echo "CREATE USER ong WITH PASSWORD 'b4s3dg0d';" | sudo -u postgres psql
-echo "CREATE DATABASE ong;" | sudo -u postgres psql
-echo "GRANT ALL PRIVILEGES ON DATABASE ong TO ong;" | sudo -u postgres psql
+echo "CREATE USER osiam WITH PASSWORD 'osiam';" | sudo -u postgres psql
+echo "CREATE DATABASE osiam;" | sudo -u postgres psql
+echo "GRANT ALL PRIVILEGES ON DATABASE osiam TO osiam;" | sudo -u postgres psql
 
 mkdir -p migrations/osiam
 cp osiam/target/osiam-classes.jar migrations/osiam
@@ -26,7 +26,7 @@ flyway -locations=db/migration/postgresql/ \
     migrate
 
 # import addon setup data
-sudo -u ong psql -f addon-self-administration/src/main/sql/client.sql
-sudo -u ong psql -f addon-self-administration/src/main/sql/extension.sql
-sudo -u ong psql -f addon-administration/src/main/sql/client.sql
-sudo -u ong psql -f addon-administration/src/main/sql/admin_group.sql
+sudo -u osiam psql -f addon-self-administration/src/main/sql/client.sql
+sudo -u osiam psql -f addon-self-administration/src/main/sql/extension.sql
+sudo -u osiam psql -f addon-administration/src/main/sql/client.sql
+sudo -u osiam psql -f addon-administration/src/main/sql/admin_group.sql
