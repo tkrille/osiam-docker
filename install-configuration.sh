@@ -2,8 +2,10 @@
 
 set -e
 
+mkdir /var/lib/osiam
+mv osiam/src/main/deploy/* /var/lib/osiam
+
 mkdir /etc/osiam
-mv osiam/src/main/deploy/* /etc/osiam
 mv addon-self-administration/src/main/deploy/* /etc/osiam
 mv addon-administration/src/main/deploy/* /etc/osiam
 
